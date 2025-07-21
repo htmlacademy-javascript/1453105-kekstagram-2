@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Дарья Петрова](https://up.htmlacademy.ru/javascript-individual/2/user/1453105).
-* Наставник: `Неизвестно`.
+* Наставник: [Давид Чачанов](https://htmlacademy.ru/profile/id2355549).
 
 ---
 
