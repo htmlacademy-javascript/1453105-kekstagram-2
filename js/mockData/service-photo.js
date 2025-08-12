@@ -13,6 +13,6 @@ export const createPhoto = () => {
     url: `photos/${generatePhotoPath()}.jpg`,
     description: DESCRIPTION_LIST[generateDescription()],
     likes: getRandomInteger(15, 200),
-    comments: () => Array.from({length: numberOfComments }, generateComment),
+    comments: Array.from({length: numberOfComments }, generateComment),
   };
 };
