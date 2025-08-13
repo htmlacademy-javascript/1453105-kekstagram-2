@@ -1,4 +1,4 @@
-import {DESCRIPTION_LIST} from './const';
+import {PHOTO_COUNT, DESCRIPTION_LIST} from './const';
 import {createRandomIdFromRangeGenerator, getRandomInteger} from './service';
 import {generateComment} from './service-comment';
 
@@ -6,7 +6,7 @@ const generatePhotoId = createRandomIdFromRangeGenerator(1, 25);
 const generatePhotoPath = createRandomIdFromRangeGenerator(1, 25);
 const generateDescription = createRandomIdFromRangeGenerator(0, 24);
 
-export const createPhoto = () => {
+const createPhoto = () => {
   const numberOfComments = getRandomInteger(0, 30);
   return {
     id: generatePhotoId(),
@@ -16,3 +16,5 @@ export const createPhoto = () => {
     comments: Array.from({length: numberOfComments }, generateComment),
   };
 };
+
+export const getPhotoList = () => Array.from({length: PHOTO_COUNT }, createPhoto);
