@@ -9,6 +9,9 @@ export const createRandomIdFromRangeGenerator = (min, max) => {
   const idList = new Set();
   return function(){
     let tempId = getRandomInteger(min, max);
+    if (idList.size >= (max - min + 1)) {
+      return null;
+    }
     while (idList.has(tempId)) {
       tempId = getRandomInteger(min, max);
     }
