@@ -41,4 +41,4 @@ const isMeetingWillBe = (startDay, endDay, meetingTime, meetingDuration) => {
 isValidLengthString('проверяемая строка', 20);
 isPalindrome('Гни комсомол лом о смокинг');
 turnToInteger('1 кефир, 0.5 батона');
-isMeetingWillBe('08:00', '17:30', '14:00', 90);
+isMeetingWillBe('08:00', '17:00', '14:00', 90);
