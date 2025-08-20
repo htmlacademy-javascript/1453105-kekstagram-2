@@ -32,7 +32,9 @@ const isMeetingWillBe = (startDay, endDay, meetingTime, meetingDuration) => {
   const startMeeting = timeToMilliseconds(meetingTime);
   const durationInHours = toHoursAndMinutes(meetingDuration);
   const tempMeetingStartTime = meetingTime.split(':').map((i) => +i);
-  const endMeeting = timeToMilliseconds(`${durationInHours.hours + tempMeetingStartTime[0]}:${ durationInHours.minutes + tempMeetingStartTime[1]}`);
+  const endMeetingHours = durationInHours.hours + tempMeetingStartTime[0];
+  const endMeetingMinutes = durationInHours.minutes + tempMeetingStartTime[1];
+  const endMeeting = timeToMilliseconds(`${endMeetingHours}:${endMeetingMinutes}`);
   return startWorkDay <= startMeeting && endMeeting <= endWorkDay;
 };
 
