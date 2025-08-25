@@ -1,5 +1,7 @@
 import {getPhotoList} from './mockData/service-photo';
+import {renderPhotoList} from './services/render-photo';
 
-// eslint-disable-next-line no-console
-console.log(getPhotoList());
+const photoList = getPhotoList();
+renderPhotoList(photoList);
+
 
