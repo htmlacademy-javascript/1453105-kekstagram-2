@@ -10,5 +10,3 @@ export const generateComment = () => ({
   message: generateMessage(),
   name: NAME_LIST[getRandomInteger(0, NAME_LIST.length - 1)]
 });
-
-
