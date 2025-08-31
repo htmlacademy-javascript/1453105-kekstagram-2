@@ -1,6 +1,6 @@
 export const isValidLengthString = (inputString, lengthString) => inputString.length <= lengthString;
 
-const isPalindrome = (inputString) => {
+export const isPalindrome = (inputString) => {
   const tempString = inputString.toLowerCase().trim().replace(/\s+/g, '');
   const reverseString = tempString.split('').reverse().join('');
   return reverseString === tempString;
