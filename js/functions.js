@@ -1,12 +1,12 @@
-const isValidLengthString = (inputString, lengthString) => inputString.length <= lengthString;
+export const isValidLengthString = (inputString, lengthString) => inputString.length <= lengthString;
 
-const isPalindrome = (inputString) => {
+export const isPalindrome = (inputString) => {
   const tempString = inputString.toLowerCase().trim().replace(/\s+/g, '');
   const reverseString = tempString.split('').reverse().join('');
   return reverseString === tempString;
 };
 
-const turnToInteger = (inputValue) => {
+export const turnToInteger = (inputValue) => {
   if (inputValue.length < 1) {
     return NaN;
   }
@@ -26,7 +26,7 @@ const timeToMilliseconds = (time) => {
   return new Date(2025, 1,1, hours[0], hours[1], 0).getTime();
 };
 
-const isMeetingWillBe = (startDay, endDay, meetingTime, meetingDuration) => {
+export const isMeetingWillBe = (startDay, endDay, meetingTime, meetingDuration) => {
   const startWorkDay = timeToMilliseconds(startDay);
   const endWorkDay = timeToMilliseconds(endDay);
   const startMeeting = timeToMilliseconds(meetingTime);
@@ -38,7 +38,6 @@ const isMeetingWillBe = (startDay, endDay, meetingTime, meetingDuration) => {
   return startWorkDay <= startMeeting && endMeeting <= endWorkDay;
 };
 
-isValidLengthString('проверяемая строка', 20);
-isPalindrome('Гни комсомол лом о смокинг');
-turnToInteger('1 кефир, 0.5 батона');
-isMeetingWillBe('08:00', '17:00', '14:00', 90);
+export const isEscapeKey = (evt) => evt.key === 'Escape';
+export const isEnterKey = (evt) => evt.key === 'Enter';
+

@@ -7,10 +7,12 @@ export const getRandomInteger = (a, b) => {
 
 export const createRandomIdFromRangeGenerator = (min, max) => {
   const idList = new Set();
+  let sequentialId = min - 1;
   return function(){
     let tempId = getRandomInteger(min, max);
     if (idList.size >= (max - min + 1)) {
-      return null;
+      sequentialId = (sequentialId + 1) > max ? min : sequentialId + 1;
+      return sequentialId;
     }
     while (idList.has(tempId)) {
       tempId = getRandomInteger(min, max);

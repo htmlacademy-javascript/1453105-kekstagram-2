@@ -1,4 +1,5 @@
 export const PHOTO_COUNT = 25;
+export const COMMENTS_PER_PAGE = 5;
 export const DESCRIPTION_LIST = [
   'Пейзажная гармония',
   'Природная идиллия',
