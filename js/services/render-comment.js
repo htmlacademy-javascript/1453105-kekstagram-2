@@ -18,6 +18,14 @@ const renderComment = ({id, avatar, message, name}, commentTemplate) => {
 const drawContext = (shown, total) => {
   counter.querySelector('.social__comment-shown-count').textContent = shown;
   counter.querySelector('.social__comment-total-count').textContent = total;
+  if (total < 1 || total < COMMENTS_PER_PAGE) {
+    counter.classList.add('hidden');
+    allCounter.classList.add('hidden');
+  }
+  if (total <= shown) {
+    counter.classList.remove('hidden');
+    allCounter.classList.add('hidden');
+  }
 };
 
 export const drawComments = () => {
@@ -32,15 +40,6 @@ export const drawComments = () => {
   });
   commentWrapper.appendChild(commentListFragment);
   drawContext(countSlicedComments, comments.length);
-
-  if (comments.length < 1 || comments.length < COMMENTS_PER_PAGE) {
-    counter.classList.add('hidden');
-    allCounter.classList.add('hidden');
-  }
-  if (comments.length <= countSlicedComments) {
-    counter.classList.remove('hidden');
-    allCounter.classList.add('hidden');
-  }
   currentCountComments += COMMENTS_PER_PAGE;
 };
 
