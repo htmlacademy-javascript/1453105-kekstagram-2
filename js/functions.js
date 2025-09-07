@@ -1,3 +1,5 @@
+import {descriptionInput, hashTagInput} from './services/validate-form';
+
 export const isValidLengthString = (inputString, lengthString) => inputString.length <= lengthString;
 
 export const isPalindrome = (inputString) => {
@@ -41,3 +43,13 @@ export const isMeetingWillBe = (startDay, endDay, meetingTime, meetingDuration) 
 export const isEscapeKey = (evt) => evt.key === 'Escape';
 export const isEnterKey = (evt) => evt.key === 'Enter';
 
+export const onDocumentKeydown = (evt, cb) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    if (document.activeElement === hashTagInput || document.activeElement === descriptionInput) {
+      evt.stopPropagation();
+    } else {
+      cb();
+    }
+  }
+};
