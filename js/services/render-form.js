@@ -1,5 +1,8 @@
 import {onDocumentKeydown} from '../functions';
 import {validateForm} from './validate-form';
+import {addPhotoEditor} from './edit-photo';
+import {removeScaleListener} from './scale-photo';
+import {removeFilterListener} from './filter-photo';
 
 const photoUploadSection = document.querySelector('.img-upload');
 const photoInput = photoUploadSection.querySelector('.img-upload__input');
@@ -12,6 +15,8 @@ const closeForm = () => {
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', (evt) => onDocumentKeydown(evt, closeForm));
   closeButton.removeEventListener('click', closeForm);
+  removeScaleListener();
+  removeFilterListener();
   photoInput.value = '';
 };
 
@@ -26,6 +31,7 @@ const openForm = () => {
 export const addFormListener = () => {
   const loadPhoto = () => {
     openForm();
+    addPhotoEditor();
   };
   photoInput.addEventListener('change', loadPhoto);
 };
