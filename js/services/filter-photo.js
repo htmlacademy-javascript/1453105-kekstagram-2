@@ -107,6 +107,13 @@ const setSlider = () => {
   });
 };
 
+export const clearSliderEffects = () => {
+  selectedEffectElement = document.querySelector(`#${'effect-none'}`);
+  setValue(0);
+  updateSlider(0,1, 1);
+  imagePreview.style.filter = 'none';
+};
+
 export const addFilterListener = () => {
   effectsButtons.forEach((btn) => {
     btn.addEventListener('click', (evt) => changeEffect(evt));

@@ -1,8 +1,11 @@
 import {isValidLengthString} from '../functions';
+import {postPhoto} from '../api/api';
+import {closeForm} from './render-form';
 const HASHTAG_LENGTH = 20;
 const HASHTAG_COUNT = 5;
 let errorMessage = '';
 const form = document.querySelector('.img-upload__form');
+const submitButton = form.querySelector('.img-upload__submit');
 export const hashTagInput = form.querySelector('.text__hashtags');
 export const descriptionInput = form.querySelector('.text__description');
 const error = () => errorMessage;
@@ -60,18 +63,44 @@ const pristine = new Pristine(form, {
 });
 
 const validateComment = (value) => value.length < 140;
-
 const onHashtagInput = () => {
   validateHashTag(hashTagInput.value);
 };
 
+const onSuccess = (data) => {
+  // eslint-disable-next-line no-console
+  console.log('sucess', data);
+  closeForm();
+  hashTagInput.value = '';
+  descriptionInput.value = '';
+};
+
+const onError = () => {
+  // eslint-disable-next-line no-console
+  console.log('error');
+};
+
+const blockSubmitButton = () => {
+  submitButton.disable = true;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disable = false;
+};
+
+
 export const validateForm = (evt) => {
   evt.preventDefault();
-  if (pristine.validate()) {
+  const isValid = pristine.validate();
+  if (isValid) {
     hashTagInput.value = hashTagInput.value.trim().replaceAll(/\s+/g, ' ');
-    form.submit();
+    blockSubmitButton();
+    postPhoto(new FormData(evt.target)).then(onSuccess).catch(() => onError()).finally(unblockSubmitButton);
   }
 };
+
 pristine.addValidator(hashTagInput, validateHashTag, error, 2, false);
 pristine.addValidator(descriptionInput, validateComment, 'Достигнута максимальная длина комментария');
 hashTagInput.addEventListener('input', onHashtagInput);
+
+form.addEventListener('submit', validateForm);
