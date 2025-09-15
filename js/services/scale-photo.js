@@ -10,6 +10,10 @@ const increaseButton = scaleWrapper.querySelector('.scale__control--bigger');
 const imageSize = document.querySelector('.scale__control--value');
 const imagePreview = document.querySelector('.img-upload__preview').querySelector('img');
 
+export const removeImageScale = () => {
+  imagePreview.style.transform = 'none';
+};
+
 const scaleImage = (value) => {
   imagePreview.style.transform = `scale(${value * 0.01})`;
 };

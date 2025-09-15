@@ -1,10 +1,15 @@
-import {getPhotoList} from './mockData/service-photo';
 import {renderPhotoList} from './services/render-photo';
 import {setPhotoPopupListener} from './services/render-popup';
 import {addFormListener} from './services/render-form';
+import {getPhotoList} from './api/api';
+import {showErrorMessage} from './services/show-error';
 
-const photoList = getPhotoList();
-renderPhotoList(photoList);
-setPhotoPopupListener(photoList);
-addFormListener();
+try {
+  const photoList = await getPhotoList();
+  renderPhotoList(photoList);
+  setPhotoPopupListener(photoList);
+  addFormListener();
+} catch {
+  showErrorMessage();
+}
 
