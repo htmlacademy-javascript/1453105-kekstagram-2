@@ -12,6 +12,7 @@ const imagePreview = document.querySelector('.img-upload__preview').querySelecto
 
 export const removeImageScale = () => {
   imagePreview.style.transform = 'none';
+  imageSize.value = `${MAX_SCALE}%`;
 };
 
 const scaleImage = (value) => {

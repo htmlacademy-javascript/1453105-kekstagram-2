@@ -4,19 +4,11 @@ export const getPhotoList = () => {
 };
 
 export const postPhoto = async (photoData) => {
-  const url = 'https://31.javascript.htmlacademy.pro/kekstagram';
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      body: photoData
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-
-  } catch (error) {
-    throw new Error('Не удалось отправить форму. Попробуйте ещё раз');
-  }
+  const url = 'https://31.javascript.htmlacademy.pro/kekstagram1';
+  const response = await fetch(url, {
+    method: 'POST',
+    body: photoData
+  });
+  return await response.json();
 };
 
