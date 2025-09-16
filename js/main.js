@@ -2,7 +2,7 @@ import {renderPhotoList} from './services/render-photo';
 import {setPhotoPopupListener} from './services/render-popup';
 import {addFormListener} from './services/render-form';
 import {getPhotoList} from './api/api';
-import {showErrorMessage} from './services/show-error';
+import {showErrorLoadPhotoMessage} from './services/show-message';
 
 try {
   const photoList = await getPhotoList();
@@ -10,6 +10,6 @@ try {
   setPhotoPopupListener(photoList);
   addFormListener();
 } catch {
-  showErrorMessage();
+  showErrorLoadPhotoMessage();
 }
 

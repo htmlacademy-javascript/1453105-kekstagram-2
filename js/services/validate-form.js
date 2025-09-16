@@ -1,6 +1,7 @@
 import {isValidLengthString} from '../functions';
 import {postPhoto} from '../api/api';
 import {closeForm} from './render-form';
+import {showErrorMessage, showSuccessMessage} from './show-message';
 const HASHTAG_LENGTH = 20;
 const HASHTAG_COUNT = 5;
 let errorMessage = '';
@@ -10,6 +11,7 @@ export const hashTagInput = form.querySelector('.text__hashtags');
 export const descriptionInput = form.querySelector('.text__description');
 const error = () => errorMessage;
 
+const validateComment = (value) => value.length < 140;
 const validateHashTag = (value) => {
   errorMessage = '';
   const inputValue = value.toLowerCase().trim();
@@ -56,51 +58,51 @@ const validateHashTag = (value) => {
   });
 };
 
-const pristine = new Pristine(form, {
-  classTo: 'img-upload__form',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error'
-});
-
-const validateComment = (value) => value.length < 140;
-const onHashtagInput = () => {
-  validateHashTag(hashTagInput.value);
-};
-
-const onSuccess = (data) => {
-  // eslint-disable-next-line no-console
-  console.log('sucess', data);
+const onSuccess = () => {
   closeForm();
   hashTagInput.value = '';
   descriptionInput.value = '';
+  showSuccessMessage();
 };
 
 const onError = () => {
-  // eslint-disable-next-line no-console
-  console.log('error');
+  showErrorMessage();
 };
 
 const blockSubmitButton = () => {
   submitButton.disable = true;
+  submitButton.textContent = 'Публикация...';
 };
 
 const unblockSubmitButton = () => {
   submitButton.disable = false;
+  submitButton.textContent = 'Опубликовать';
 };
 
-
-export const validateForm = (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    hashTagInput.value = hashTagInput.value.trim().replaceAll(/\s+/g, ' ');
-    blockSubmitButton();
-    postPhoto(new FormData(evt.target)).then(onSuccess).catch(() => onError()).finally(unblockSubmitButton);
-  }
-};
+const pristine = new Pristine(form, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+});
 
 pristine.addValidator(hashTagInput, validateHashTag, error, 2, false);
 pristine.addValidator(descriptionInput, validateComment, 'Достигнута максимальная длина комментария');
-hashTagInput.addEventListener('input', onHashtagInput);
 
-form.addEventListener('submit', validateForm);
+const submitData = async (evt) => {
+  evt.preventDefault();
+  if (pristine.validate()) {
+    hashTagInput.value = hashTagInput.value.trim().replaceAll(/\s+/g, ' ');
+    blockSubmitButton();
+    try {
+      await postPhoto(new FormData(evt.target));
+      onSuccess();
+    } catch {
+      onError();
+    } finally {
+      unblockSubmitButton();
+    }
+  }
+};
+
+form.addEventListener('submit', submitData);
+

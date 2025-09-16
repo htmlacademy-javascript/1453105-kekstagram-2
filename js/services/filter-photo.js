@@ -111,7 +111,7 @@ export const clearSliderEffects = () => {
   selectedEffectElement = document.querySelector(`#${'effect-none'}`);
   setValue(0);
   updateSlider(0,1, 1);
-  imagePreview.style.filter = 'none';
+  selectedEffectElement.checked = true;
 };
 
 export const addFilterListener = () => {
