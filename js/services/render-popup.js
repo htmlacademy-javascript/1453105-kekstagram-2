@@ -27,11 +27,6 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-function clearListeners(){
-  document.removeEventListener('keydown', onDocumentKeydown);
-  document.removeEventListener('click', closePopup);
-}
-
 const showPhoto = (item) => {
   renderBigPhoto(item, photoModalElement);
   renderBigPhotoContext(item);
@@ -46,16 +41,23 @@ const openPopup = (photo) => {
   closeButton.addEventListener('click', closePopup);
 };
 
+const onPhotoClick = (evt, list) => {
+  const choosenPhoto = evt.target.closest('.picture');
+  if (choosenPhoto){
+    evt.preventDefault();
+    const photoData = list.find((i) => i.id.toString() === choosenPhoto.dataset.photoId.toString());
+    openPopup(photoData);
+  }
+};
+
+function clearListeners(){
+  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('click', closePopup);
+  photoList.removeEventListener('click', onPhotoClick);
+}
+
 export const setPhotoPopupListener = (list) => {
-  const onPhotoClick = (evt) => {
-    const choosenPhoto = evt.target.closest('.picture');
-    if (choosenPhoto){
-      evt.preventDefault();
-      const photoData = list.find((i) => i.id.toString() === choosenPhoto.dataset.photoId.toString());
-      openPopup(photoData);
-    }
-  };
-  photoList.addEventListener('click', onPhotoClick);
+  photoList.addEventListener('click', (evt) => onPhotoClick(evt, list));
 };
 
 

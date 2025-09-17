@@ -10,6 +10,7 @@ const renderPhoto = ({id, url, description, likes, comments}, photoTemplate) => 
 
 export const renderPhotoList = (photoList) => {
   const photoWrapper = document.querySelector('.pictures');
+  photoWrapper.querySelectorAll('.picture').forEach((block) => block.remove());
   const photoTemplate = document.querySelector('#picture').content;
   const photoListFragment = document.createDocumentFragment();
   photoList.forEach((photo)=> {
