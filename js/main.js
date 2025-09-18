@@ -6,12 +6,16 @@ import {getFilteredPhotoList, showFilter} from './services/filter-photo';
 
 const startApp = async() => {
   try {
-    const photoList = await getPhotoList();
-    showFilter();
-    getFilteredPhotoList(photoList);
-    addFormListener();
+    await getPhotoList()
+      .then((list) => {
+        showFilter();
+        getFilteredPhotoList(list);
+        addFormListener();
+      }).catch(() => {
+        showErrorLoadPhotoMessage();
+      });
   } catch {
-    showErrorLoadPhotoMessage();
+    throw new Error('Ошибка загрузки данных');
   }
 };
 

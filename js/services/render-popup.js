@@ -1,6 +1,6 @@
 import {clearCommentList, renderComments} from './render-comment';
 import {renderBigPhoto} from './render-photo';
-import {isEscapeKey} from '../functions';
+import {onDocumentKeydown} from '../functions';
 
 const photoModalElement = document.querySelector('.big-picture');
 const photoList = document.querySelector('.pictures');
@@ -20,13 +20,6 @@ const closePopup = () => {
   clearListeners();
 };
 
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closePopup();
-  }
-};
-
 const showPhoto = (item) => {
   renderBigPhoto(item, photoModalElement);
   renderBigPhotoContext(item);
@@ -37,7 +30,7 @@ const openPopup = (photo) => {
   photoModalElement.classList.remove('hidden');
   body.classList.add('modal-open');
   showPhoto(photo);
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown',(evt)=> onDocumentKeydown(evt, closePopup));
   closeButton.addEventListener('click', closePopup);
 };
 
@@ -45,7 +38,7 @@ const onPhotoClick = (evt, list) => {
   const choosenPhoto = evt.target.closest('.picture');
   if (choosenPhoto){
     evt.preventDefault();
-    const photoData = list.find((i) => i.id.toString() === choosenPhoto.dataset.photoId.toString());
+    const photoData = list.find((i) => String(i.id) === String(choosenPhoto.dataset.photoId));
     openPopup(photoData);
   }
 };

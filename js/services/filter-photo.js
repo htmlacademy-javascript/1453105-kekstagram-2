@@ -12,41 +12,33 @@ export const showFilter = () => {
   filterWrapper.classList.remove('img-filters--inactive');
 };
 
-export const hideFilter = () => {
-  filterWrapper.classList.add('img-filters--inactive');
-};
-
 const debounceFilters = debounce((list) => {
   renderPhotoList(list);
 }, 500);
 
 const filter = {
   'filter-default': () => {
-    debounceFilters([...tempPhotoList]);
-    setPhotoPopupListener([...tempPhotoList]);
+    debounceFilters(tempPhotoList);
   },
   'filter-random': () => {
     const randomList = Array.from({length: COUNT_RANDOM_PHOTO }, createRandomIdFromRangeGenerator(0, 24));
-    const randomPhotoList = [...tempPhotoList].filter((el, index) => randomList.includes(index));
+    const randomPhotoList = tempPhotoList.filter((el, index) => randomList.includes(index));
     debounceFilters(randomPhotoList);
-    setPhotoPopupListener([...tempPhotoList]);
   },
   'filter-discussed': () => {
-    const popularList = [...tempPhotoList].sort((item1, item2) => item2.comments.length - item1.comments.length);
+    const popularList = tempPhotoList.slice().sort((item1, item2) => item2.comments.length - item1.comments.length);
     debounceFilters(popularList);
-    setPhotoPopupListener([...tempPhotoList]);
   },
 };
 
 const changeFilter = (evt) => {
   if (evt.target.id in filter) {
-    const targetButton = document.querySelector(`#${evt.target.id}`);
     const activeButton = document.querySelector('.img-filters__button--active');
-    if (targetButton === activeButton) {
+    if (evt.target === activeButton) {
       return;
     }
     activeButton.classList.toggle('img-filters__button--active');
-    targetButton.classList.toggle('img-filters__button--active');
+    evt.target.classList.toggle('img-filters__button--active');
     filter[evt.target.id]();
   }
 };
@@ -59,6 +51,7 @@ const setPhotoFilterListener = () => {
 
 export const getFilteredPhotoList = (list) => {
   setPhotoFilterListener();
-  tempPhotoList = list.slice();
-  debounceFilters([...tempPhotoList]);
+  tempPhotoList = [...list];
+  debounceFilters(tempPhotoList);
+  setPhotoPopupListener(tempPhotoList);
 };

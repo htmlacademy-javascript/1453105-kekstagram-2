@@ -41,7 +41,6 @@ export const isMeetingWillBe = (startDay, endDay, meetingTime, meetingDuration) 
 };
 
 export const isEscapeKey = (evt) => evt.key === 'Escape';
-export const isEnterKey = (evt) => evt.key === 'Enter';
 
 export const onDocumentKeydown = (evt, cb) => {
   if (isEscapeKey(evt)) {
