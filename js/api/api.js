@@ -1,10 +1,13 @@
-export const getPhotoList = () => {
-  const url = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
-  return fetch(url).then((response) => response.ok ? response.json() : Promise.reject());
-};
+const url = 'https://31.javascript.htmlacademy.pro/kekstagram';
+
+export const getPhotoList = () => fetch(`${url}/data`).then((response) => {
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+  return response.json();
+});
 
 export const postPhoto = async (photoData) => {
-  const url = 'https://31.javascript.htmlacademy.pro/kekstagram1';
   const response = await fetch(url, {
     method: 'POST',
     body: photoData

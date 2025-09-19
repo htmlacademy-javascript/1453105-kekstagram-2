@@ -1,6 +1,6 @@
 import {clearCommentList, renderComments} from './render-comment';
 import {renderBigPhoto} from './render-photo';
-import {isEscapeKey} from '../functions';
+import {onDocumentKeydown} from '../functions';
 
 const photoModalElement = document.querySelector('.big-picture');
 const photoList = document.querySelector('.pictures');
@@ -20,18 +20,6 @@ const closePopup = () => {
   clearListeners();
 };
 
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closePopup();
-  }
-};
-
-function clearListeners(){
-  document.removeEventListener('keydown', onDocumentKeydown);
-  document.removeEventListener('click', closePopup);
-}
-
 const showPhoto = (item) => {
   renderBigPhoto(item, photoModalElement);
   renderBigPhotoContext(item);
@@ -42,20 +30,27 @@ const openPopup = (photo) => {
   photoModalElement.classList.remove('hidden');
   body.classList.add('modal-open');
   showPhoto(photo);
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown',(evt)=> onDocumentKeydown(evt, closePopup));
   closeButton.addEventListener('click', closePopup);
 };
 
+const onPhotoClick = (evt, list) => {
+  const choosenPhoto = evt.target.closest('.picture');
+  if (choosenPhoto){
+    evt.preventDefault();
+    const photoData = list.find((i) => String(i.id) === String(choosenPhoto.dataset.photoId));
+    openPopup(photoData);
+  }
+};
+
+function clearListeners(){
+  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('click', closePopup);
+  photoList.removeEventListener('click', onPhotoClick);
+}
+
 export const setPhotoPopupListener = (list) => {
-  const onPhotoClick = (evt) => {
-    const choosenPhoto = evt.target.closest('.picture');
-    if (choosenPhoto){
-      evt.preventDefault();
-      const photoData = list.find((i) => i.id.toString() === choosenPhoto.dataset.photoId.toString());
-      openPopup(photoData);
-    }
-  };
-  photoList.addEventListener('click', onPhotoClick);
+  photoList.addEventListener('click', (evt) => onPhotoClick(evt, list));
 };
 
 

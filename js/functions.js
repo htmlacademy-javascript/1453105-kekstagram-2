@@ -41,7 +41,6 @@ export const isMeetingWillBe = (startDay, endDay, meetingTime, meetingDuration) 
 };
 
 export const isEscapeKey = (evt) => evt.key === 'Escape';
-export const isEnterKey = (evt) => evt.key === 'Enter';
 
 export const onDocumentKeydown = (evt, cb) => {
   if (isEscapeKey(evt)) {
@@ -53,3 +52,13 @@ export const onDocumentKeydown = (evt, cb) => {
     }
   }
 };
+
+// Функция взята из интернета и доработана
+// Источник - https://www.freecodecamp.org/news/javascript-debounce-example
+export function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}

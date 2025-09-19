@@ -1,5 +1,4 @@
 import {onDocumentKeydown} from '../functions';
-
 const REMOVE_MESSAGE_TIME = 5000;
 const errorTemplate = document.querySelector('#data-error').content;
 let currentElement = '';
@@ -18,7 +17,7 @@ const closeMessage = () => {
     currentElement.remove();
     currentElement = null;
   }
-  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', (evt) => onDocumentKeydown(evt));
   document.removeEventListener('click', closeOverlay);
 };
 

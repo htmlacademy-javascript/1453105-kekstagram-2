@@ -1,7 +1,8 @@
 import {onDocumentKeydown} from '../functions';
 import {addPhotoEditor} from './edit-photo';
 import {removeImageScale, removeScaleListener} from './scale-photo';
-import {clearSliderEffects, removeFilterListener} from './filter-photo';
+import {clearSliderEffects, removeFilterListener} from './set-effect-photo';
+import {removeFileInputListener} from './load-photo';
 
 const photoUploadSection = document.querySelector('.img-upload');
 const photoInput = photoUploadSection.querySelector('.img-upload__input');
@@ -17,6 +18,7 @@ export const closeForm = () => {
   removeFilterListener();
   removeImageScale();
   clearSliderEffects();
+  removeFileInputListener();
   photoInput.value = '';
 };
 
