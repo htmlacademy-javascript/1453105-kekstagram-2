@@ -3,6 +3,7 @@ import {addPhotoEditor} from './edit-photo';
 import {removeImageScale, removeScaleListener} from './scale-photo';
 import {clearSliderEffects, removeFilterListener} from './set-effect-photo';
 import {removeFileInputListener} from './load-photo';
+import {descriptionInput, hashTagInput} from './validate-form';
 
 const photoUploadSection = document.querySelector('.img-upload');
 const photoInput = photoUploadSection.querySelector('.img-upload__input');
@@ -20,19 +21,22 @@ export const closeForm = () => {
   clearSliderEffects();
   removeFileInputListener();
   photoInput.value = '';
+  hashTagInput.value = '';
+  descriptionInput.value = '';
 };
 
 const openForm = () => {
-  overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  overlay.classList.remove('hidden');
   document.addEventListener('keydown', (evt) => onDocumentKeydown(evt, closeForm));
   closeButton.addEventListener('click', closeForm);
 };
 
+const loadPhoto = () => {
+  openForm();
+  addPhotoEditor();
+};
+
 export const addFormListener = () => {
-  const loadPhoto = () => {
-    openForm();
-    addPhotoEditor();
-  };
   photoInput.addEventListener('change', loadPhoto);
 };
