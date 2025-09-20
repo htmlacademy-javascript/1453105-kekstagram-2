@@ -13,6 +13,7 @@ const imagePreview = document.querySelector('.img-upload__preview').querySelecto
 export const removeImageScale = () => {
   imagePreview.style.transform = 'none';
   imageSize.value = `${MAX_SCALE}%`;
+  imageSize.setAttribute('value', `${MAX_SCALE}%`);
 };
 
 const scaleImage = (value) => {
@@ -27,6 +28,7 @@ const decreaseImage = () => {
     currentValue -= STEP;
   }
   imageSize.value = `${currentValue}%`;
+  imageSize.setAttribute('value', `${currentValue}%`);
   scaleImage(currentValue);
 };
 
@@ -38,6 +40,7 @@ const increaseImage = () => {
     currentValue += STEP;
   }
   imageSize.value = `${currentValue}%`;
+  imageSize.setAttribute('value', `${currentValue}%`);
   scaleImage(currentValue);
 };
 

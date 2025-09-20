@@ -1,12 +1,14 @@
 import {isValidLengthString} from '../functions';
 import {postPhoto} from '../api/api';
+import {appendNotification} from './show-message';
 import {closeForm} from './render-form';
-import {showErrorMessage, showSuccessMessage} from './show-message';
 const HASHTAG_LENGTH = 20;
 const HASHTAG_COUNT = 5;
 let errorMessage = '';
 const form = document.querySelector('.img-upload__form');
 const submitButton = form.querySelector('.img-upload__submit');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 export const hashTagInput = form.querySelector('.text__hashtags');
 export const descriptionInput = form.querySelector('.text__description');
 const error = () => errorMessage;
@@ -58,24 +60,13 @@ const validateHashTag = (value) => {
   });
 };
 
-const onSuccess = () => {
-  closeForm();
-  hashTagInput.value = '';
-  descriptionInput.value = '';
-  showSuccessMessage();
-};
-
-const onError = () => {
-  showErrorMessage();
-};
-
 const blockSubmitButton = () => {
-  submitButton.disable = true;
+  submitButton.setAttribute('disabled', 'disabled');
   submitButton.textContent = 'Публикация...';
 };
 
 const unblockSubmitButton = () => {
-  submitButton.disable = false;
+  submitButton.removeAttribute('disabled');
   submitButton.textContent = 'Опубликовать';
 };
 
@@ -95,9 +86,9 @@ const submitData = async (evt) => {
     blockSubmitButton();
     try {
       await postPhoto(new FormData(evt.target));
-      onSuccess();
+      appendNotification(successTemplate, () => closeForm());
     } catch {
-      onError();
+      appendNotification(errorTemplate);
     } finally {
       unblockSubmitButton();
     }

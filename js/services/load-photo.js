@@ -16,6 +16,7 @@ const loadImage = (evt) => {
   if (matches) {
     const url = URL.createObjectURL(file);
     imagePreview.src = url;
+    imagePreview.setAttribute('src', `${url}`);
     preImageList.forEach((el) => {
       el.style.backgroundImage = `url(${url})`;
     });
