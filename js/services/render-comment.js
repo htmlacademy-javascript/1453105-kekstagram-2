@@ -1,10 +1,10 @@
-import {COMMENTS_PER_PAGE} from '../mockData/const';
+const COMMENTS_PER_PAGE = 5;
 const commentWrapper = document.querySelector('.social__comments');
-let currentCountComments = 0;
-let comments = [];
 const counter = document.querySelector('.social__comment-count');
 const allCounter = document.querySelector('.comments-loader');
 const showCommentsButton = document.querySelector('.social__comments-loader');
+let currentCountComments = 0;
+let comments = [];
 
 const renderComment = ({id, avatar, message, name}, commentTemplate) => {
   const commentElement = commentTemplate.cloneNode(true);
@@ -28,7 +28,7 @@ const drawContext = (shown, total) => {
   }
 };
 
-export const drawComments = () => {
+const onShowCommentsButtonClick = () => {
   const commentListFragment = document.createDocumentFragment();
   const slicedComments = comments.slice(currentCountComments, currentCountComments + COMMENTS_PER_PAGE);
   const countSlicedComments = slicedComments.length + currentCountComments;
@@ -48,11 +48,11 @@ export const clearCommentList = () => {
   commentWrapper.innerHTML = '';
   counter.classList.remove('hidden');
   allCounter.classList.remove('hidden');
-  showCommentsButton.removeEventListener('click', drawComments);
+  showCommentsButton.removeEventListener('click', onShowCommentsButtonClick);
 };
 
 export const renderComments = (commentList) => {
   comments = commentList;
-  drawComments();
-  showCommentsButton.addEventListener('click', drawComments);
+  onShowCommentsButtonClick();
+  showCommentsButton.addEventListener('click', onShowCommentsButtonClick);
 };

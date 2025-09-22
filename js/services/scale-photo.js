@@ -20,7 +20,7 @@ const scaleImage = (value) => {
   imagePreview.style.transform = `scale(${value * 0.01})`;
 };
 
-const decreaseImage = () => {
+const onDecreaseButtonClick = () => {
   let currentValue = turnToInteger(imageSize.value);
   if (currentValue <= MIN_SCALE) {
     currentValue = MIN_SCALE;
@@ -32,7 +32,7 @@ const decreaseImage = () => {
   scaleImage(currentValue);
 };
 
-const increaseImage = () => {
+const onIncreaseButtonClick = () => {
   let currentValue = turnToInteger(imageSize.value);
   if (currentValue >= MAX_SCALE) {
     currentValue = MAX_SCALE;
@@ -45,11 +45,11 @@ const increaseImage = () => {
 };
 
 export const removeScaleListener = () => {
-  decreaseButton.removeEventListener('click', decreaseImage);
-  increaseButton.removeEventListener('click', increaseImage);
+  decreaseButton.removeEventListener('click', onDecreaseButtonClick);
+  increaseButton.removeEventListener('click', onIncreaseButtonClick);
 };
 
 export const addScaleListener = () => {
-  decreaseButton.addEventListener('click', decreaseImage);
-  increaseButton.addEventListener('click', increaseImage);
+  decreaseButton.addEventListener('click', onDecreaseButtonClick);
+  increaseButton.addEventListener('click', onIncreaseButtonClick);
 };

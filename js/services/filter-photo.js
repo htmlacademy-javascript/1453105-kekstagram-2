@@ -6,7 +6,7 @@ import {setPhotoPopupListener} from './render-popup';
 const COUNT_RANDOM_PHOTO = 10;
 const filterWrapper = document.querySelector('.img-filters');
 const buttonList = document.querySelectorAll('.img-filters__button');
-let tempPhotoList = [];
+let photos = [];
 
 export const showFilter = () => {
   filterWrapper.classList.remove('img-filters--inactive');
@@ -18,15 +18,15 @@ const debounceFilters = debounce((list) => {
 
 const filter = {
   'filter-default': () => {
-    debounceFilters(tempPhotoList);
+    debounceFilters(photos);
   },
   'filter-random': () => {
     const randomList = Array.from({length: COUNT_RANDOM_PHOTO }, createRandomIdFromRangeGenerator(0, 24));
-    const randomPhotoList = tempPhotoList.filter((el, index) => randomList.includes(index));
+    const randomPhotoList = photos.filter((el, index) => randomList.includes(index));
     debounceFilters(randomPhotoList);
   },
   'filter-discussed': () => {
-    const popularList = tempPhotoList.slice().sort((item1, item2) => item2.comments.length - item1.comments.length);
+    const popularList = photos.slice().sort((item1, item2) => item2.comments.length - item1.comments.length);
     debounceFilters(popularList);
   },
 };
@@ -51,7 +51,7 @@ const setPhotoFilterListener = () => {
 
 export const getFilteredPhotoList = (list) => {
   setPhotoFilterListener();
-  tempPhotoList = [...list];
-  debounceFilters(tempPhotoList);
-  setPhotoPopupListener(tempPhotoList);
+  photos = [...list];
+  debounceFilters(photos);
+  setPhotoPopupListener(photos);
 };
