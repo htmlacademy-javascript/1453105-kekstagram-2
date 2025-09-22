@@ -1,7 +1,7 @@
 import {isValidLengthString} from '../functions';
 import {postPhoto} from '../api/api';
 import {appendNotification} from './show-message';
-import {closeForm} from './render-form';
+import {onFormClose} from './render-form';
 const HASHTAG_LENGTH = 20;
 const HASHTAG_COUNT = 5;
 let errorMessage = '';
@@ -20,34 +20,34 @@ const validateHashTag = (value) => {
   if (!inputValue) {
     return true;
   }
-  const tempArray = inputValue.split(/\s+/);
+  const tags = inputValue.split(/\s+/);
   const rules = [
     {
-      rule: tempArray.some((i) => i === '#'),
+      rule: tags.some((i) => i === '#'),
       error: 'Хеш-тег не может состоять только из одной решётки'
     },
     {
-      rule: tempArray.some((i) => i.slice(1).includes('#')),
+      rule: tags.some((i) => i.slice(1).includes('#')),
       error: 'Хеш-теги разделяются пробелами'
     },
     {
-      rule: tempArray.some((i) => i[0] !== '#'),
+      rule: tags.some((i) => i[0] !== '#'),
       error: 'Хеш-тег  должен начинаться с символа "#"'
     },
     {
-      rule: tempArray.some((i, index, array) => array.includes(i, index + 1)),
+      rule: tags.some((i, index, array) => array.includes(i, index + 1)),
       error: 'Хеш-теги не должны повторяться'
     },
     {
-      rule: tempArray.some((i) => !isValidLengthString(i, HASHTAG_LENGTH)),
+      rule: tags.some((i) => !isValidLengthString(i, HASHTAG_LENGTH)),
       error: 'Достигнута максимальная длина хеш-тега'
     },
     {
-      rule: tempArray.length > HASHTAG_COUNT,
+      rule: tags.length > HASHTAG_COUNT,
       error: 'Достигнуто максимальное количество хеш-тегов'
     },
     {
-      rule: tempArray.some((i) => !/^#[a-zа-яё0-9]{1,19}$/i.test(i)),
+      rule: tags.some((i) => !/^#[a-zа-яё0-9]{1,19}$/i.test(i)),
       error: 'Хеш-тег содержит недопустимые символы'
     }
   ];
@@ -79,14 +79,14 @@ const pristine = new Pristine(form, {
 pristine.addValidator(hashTagInput, validateHashTag, error, 2, false);
 pristine.addValidator(descriptionInput, validateComment, 'Достигнута максимальная длина комментария');
 
-const submitData = async (evt) => {
+const onFormSubmit = async (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
     hashTagInput.value = hashTagInput.value.trim().replaceAll(/\s+/g, ' ');
     blockSubmitButton();
     try {
       await postPhoto(new FormData(evt.target));
-      appendNotification(successTemplate, () => closeForm());
+      appendNotification(successTemplate, () => onFormClose());
     } catch {
       appendNotification(errorTemplate);
     } finally {
@@ -95,5 +95,5 @@ const submitData = async (evt) => {
   }
 };
 
-form.addEventListener('submit', submitData);
+form.addEventListener('submit', onFormSubmit);
 

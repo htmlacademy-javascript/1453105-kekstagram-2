@@ -10,11 +10,11 @@ const photoInput = photoUploadSection.querySelector('.img-upload__input');
 const overlay = photoUploadSection.querySelector('.img-upload__overlay');
 const closeButton = photoUploadSection.querySelector('.img-upload__cancel');
 
-export const closeForm = () => {
+export const onFormClose = () => {
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', (evt) => onDocumentKeydown(evt, closeForm));
-  closeButton.removeEventListener('click', closeForm);
+  document.removeEventListener('keydown', (evt) => onDocumentKeydown(evt, onFormClose));
+  closeButton.removeEventListener('click', onFormClose);
   removeScaleListener();
   removeFilterListener();
   removeImageScale();
@@ -28,15 +28,15 @@ export const closeForm = () => {
 const openForm = () => {
   document.body.classList.add('modal-open');
   overlay.classList.remove('hidden');
-  document.addEventListener('keydown', (evt) => onDocumentKeydown(evt, closeForm));
-  closeButton.addEventListener('click', closeForm);
+  document.addEventListener('keydown', (evt) => onDocumentKeydown(evt, onFormClose));
+  closeButton.addEventListener('click', onFormClose);
 };
 
-const loadPhoto = () => {
+const onPhotoLoad = () => {
   openForm();
   addPhotoEditor();
 };
 
 export const addFormListener = () => {
-  photoInput.addEventListener('change', loadPhoto);
+  photoInput.addEventListener('change', onPhotoLoad);
 };

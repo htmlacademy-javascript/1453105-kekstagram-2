@@ -1,7 +1,7 @@
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const uploadImgForm = document.querySelector('.img-upload__form');
 const imagePreview = document.querySelector('.img-upload__preview').querySelector('img');
 const preImageList = document.querySelectorAll('.effects__preview');
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const loadImage = (evt) => {
   if (!evt.target.files) {
@@ -22,7 +22,6 @@ const loadImage = (evt) => {
     });
   }
 };
-
 
 export const fileInputListener = () => {
   uploadImgForm.addEventListener('change', (evt) => loadImage(evt));
