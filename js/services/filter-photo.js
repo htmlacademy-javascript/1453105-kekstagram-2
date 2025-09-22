@@ -1,5 +1,5 @@
 import {renderPhotoList} from './render-photo';
-import {createRandomIdFromRangeGenerator} from '../mockData/service';
+import {createRandomIdFromRangeGenerator} from '../functions';
 import {debounce} from '../functions';
 import {setPhotoPopupListener} from './render-popup';
 
