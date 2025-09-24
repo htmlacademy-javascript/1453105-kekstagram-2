@@ -35,7 +35,7 @@ const validateHashTag = (value) => {
       error: 'Хеш-тег  должен начинаться с символа "#"'
     },
     {
-      rule: tags.some((i, index, array) => array.includes(i, index + 1)),
+      rule: tags.some((i, index, hashTags) => hashTags.includes(i, index + 1)),
       error: 'Хеш-теги не должны повторяться'
     },
     {

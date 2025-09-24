@@ -13,7 +13,7 @@ const renderBigPhotoContext = ({description, likes}) => {
   contextWrapper.querySelector('.likes-count').textContent = likes;
 };
 
-const closePopup = () => {
+const onPopupClose = () => {
   photoModalElement.classList.add('hidden');
   body.classList.remove('modal-open');
   clearCommentList();
@@ -30,8 +30,8 @@ const openPopup = (photo) => {
   photoModalElement.classList.remove('hidden');
   body.classList.add('modal-open');
   showPhoto(photo);
-  document.addEventListener('keydown',(evt)=> onDocumentKeydown(evt, closePopup));
-  closeButton.addEventListener('click', closePopup);
+  document.addEventListener('keydown',(evt)=> onDocumentKeydown(evt, onPopupClose));
+  closeButton.addEventListener('click', onPopupClose);
 };
 
 const onPhotoClick = (evt, list) => {
@@ -45,7 +45,7 @@ const onPhotoClick = (evt, list) => {
 
 function clearListeners(){
   document.removeEventListener('keydown', onDocumentKeydown);
-  document.removeEventListener('click', closePopup);
+  document.removeEventListener('click', onPopupClose);
   photoList.removeEventListener('click', onPhotoClick);
 }
 
